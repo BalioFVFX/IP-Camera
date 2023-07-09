@@ -20,7 +20,9 @@ The stream can be watched from either your browser, the Web App or apps like VLC
 
 ### Browser
 Open your favorite web browser and navigate to your MJPEG server's IP address. For example `http://192.168.0.101:4444`
+
 ![Preview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/browser.gif?raw=true)
+
 ### VLC meida player
 Open the VLC media player, File -> Open Network -> Network and write your MJPEG's server IP address. For example `http://192.168.0.101:4444/`
 

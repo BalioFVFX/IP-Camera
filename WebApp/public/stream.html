@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Camera Stream</title>
+
+    <script src="bundle.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            margin-top: 32px;
+        }
+
+        #player-controls {
+            position: absolute;
+            left: calc(50% - 620px);
+            top: 690px;
+        }
+
+        #player-data {
+            position: absolute;
+            left: calc(50% + 500px);
+            top: 64px;
+        }
+
+        #buffer-container {
+            position: absolute;
+            top: 368px;
+            left: 50%;
+        }
+
+        #image-control-container {
+            display: flex;
+            width: 1280px;
+            justify-content: space-between;
+        }
+    </style>
+
+</head>
+
+<body>
+<div id="container">
+
+    <canvas id="canvas" style="background-color: black;"></canvas>
+
+    <md-filled-button id="connect_btn" style="margin-top: 16px;
+        width: 1280px;">Connect
+    </md-filled-button>
+
+    <div id="image-control-container">
+        <md-filled-button style="margin-top: 16px" id="screenshot_button">Screenshot</md-filled-button>
+    </div>
+</div>
+
+<div id="player-controls">
+    <img id="player-control-image" src="../icons/play.svg">
+</div>
+
+<div id="player-data">
+        <span id="bitrate-span" style="color:white;
+         -webkit-text-stroke-color: black;
+         -webkit-text-stroke-width: 0.3px;
+         font-size: 28px;
+         "></span>
+</div>
+
+<div id="buffer-container">
+    <img id="buffer-icon" src="icons/loading.svg">
+</div>
+
+
+</body>
+
+<script src="common.js"></script>
+
+<script>
+    const connectButton = document.getElementById('connect_btn');
+    const canvas = document.getElementById("canvas");
+    const playerControlImage = document.getElementById('player-control-image');
+    const bitrateSpan = document.getElementById('bitrate-span');
+    const bufferIcon = document.getElementById('buffer-icon');
+    const screenshotButton = document.getElementById('screenshot_button');
+
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = 1280;
+    canvas.height = 720;
+
+    let screenshotRequested = false;
+
+    screenshotButton.addEventListener('click', () => {
+        screenshotRequested = true;
+    });
+
+    async function sendScreenshot(imageArray) {
+        const response = await fetch(BACKEND_URL + "/screenshot", {
+            "method": "POST",
+            "headers": {
+                'Content-Type': 'application/json',
+                'Authorization': getAuthorization()
+            },
+            "body": JSON.stringify(imageArray)
+        });
+
+        const json = await response.json();
+    }
+
+    let webSocket;
+    let renderId = -1;
+
+    connectButton.addEventListener('click', () => {
+
+        if (connectButton.innerText === 'Disconnect') {
+            webSocket.close();
+            if (renderId !== -1) {
+                clearTimeout(renderId);
+            }
+
+            renderId = -1;
+
+            bufferIcon.style.display = "none";
+            playerControlImage.style.src = "/icons/play.svg";
+            connectButton.innerText = 'Connect';
+
+            return;
+        } else {
+            const serverIp = getServerIp();
+            webSocket = new WebSocket('ws://' + serverIp + "/");
+        }
+
+        webSocket.binaryType = 'arraybuffer'
+
+        webSocket.onopen = function (ev) {
+            connectButton.innerText = "Disconnect"
+        }
+
+        const FPS = 24;
+        const frames = [];
+        let needsBuffering = true;
+        let refreshCounter = 0;
+        let kbps = 0;
+        let justConnected = true;
+
+        function render() {
+            if (needsBuffering && justConnected === false) {
+                console.log("buffering...")
+                if (frames.length > 24 * 10) {
+                    // Has at least 10 seconds of play
+                    needsBuffering = false;
+                }
+
+                bufferIcon.style.display = "block";
+                refreshCounter = 0;
+                kbps = 0;
+
+                renderId = setTimeout(render, 1000 / FPS);
+
+                return;
+            }
+
+            if (frames.length === 0) {
+                needsBuffering = true;
+                bufferIcon.style.display = "block";
+                refreshCounter = 0;
+                kbps = 0;
+                renderId = setTimeout(render, 1000 / FPS);
+                return;
+            }
+
+            refreshCounter += 1;
+
+            bufferIcon.style.display = "none";
+
+            const frameData = frames.shift();
+
+            const img = new Image();
+
+            kbps += frameData.length;
+
+            if (refreshCounter >= FPS) {
+                bitrateSpan.textContent = Math.trunc((kbps / 1000)) + 'KB/s';
+                refreshCounter = 0;
+                kbps = 0;
+            }
+
+            let data = [];
+            frameData.forEach((element => {
+                let mElement = 0;
+
+                if (element < 0) {
+                    mElement = 256 - Math.abs(element);
+                } else {
+                    mElement = element;
+                }
+
+                data.push(mElement);
+            }));
+
+            if (screenshotRequested) {
+                sendScreenshot(data);
+                screenshotRequested = false
+            }
+
+            const base64Str = btoa(String.fromCharCode.apply(null, data));
+
+            img.src = `data:image/jpeg;base64,${base64Str}`;
+
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0);
+                renderId = setTimeout(render, 1000 / FPS);
+            };
+
+            justConnected = false;
+        }
+
+        render();
+
+        webSocket.onmessage = (event) => {
+            frames.push(new Int8Array(event.data));
+        }
+    })
+
+</script>
+
+</html>

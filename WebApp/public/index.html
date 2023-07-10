@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Camera</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="bundle.js"></script>
+
+    <style>
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        #controls {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            position: absolute;
+            top: calc(50% - 48px)
+        }
+    </style>
+</head>
+
+<body>
+<h1 style="text-align: center; margin-top: 32px;">IP Camera</h1>
+
+<div id="controls">
+    <div id="container">
+        <md-filled-button
+                style="margin-top: 16px; width: 80%;"
+                href="/stream.html">Connect
+        </md-filled-button>
+
+        <md-filled-button
+                style="margin-top: 16px ;width: 80%;"
+                href="gallery.html">Gallery
+        </md-filled-button>
+
+        <md-filled-button
+                style="margin-top: 16px ;width: 80%;"
+                href="settings.html">Settings
+        </md-filled-button>
+
+        <div id="auth-container">
+            <md-filled-button
+                    id="login_button"
+                    style="margin-top: 16px;"
+                    href="login.html">Login
+            </md-filled-button>
+
+            <md-filled-button
+                    id="register_button"
+                    style="margin-top: 16px;"
+                    href="register.html">Register
+            </md-filled-button>
+
+            <md-filled-button
+                    id="logout_button"
+                    style="margin-top: 16px;"
+                    >Logout
+            </md-filled-button>
+        </div>
+
+    </div>
+</div>
+<script src="common.js"></script>
+<script>
+    const logoutButton = document.getElementById('logout_button')
+    if (getAuthorization() === '') {
+        logoutButton.style.display = 'none';
+    }
+
+    logoutButton.addEventListener('click', (ev) => {
+        clearAuthorization()
+        logoutButton.style.display = 'none';
+    })
+
+</script>
+</body>
+</html>

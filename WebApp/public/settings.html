@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Camera Settings</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        #container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+    </style>
+    <script src="bundle.js"></script>
+
+
+</head>
+
+<body>
+<h1 style="text-align: center;">IP Camera</h1>
+
+<div id="container">
+    <md-outlined-text-field
+            label="Server IP address"
+            supportingText="In format: 192.168.0.101:4321"
+            style="margin-top:32px;
+          "
+            id="text-field-ip"
+    ></md-outlined-text-field>
+
+    <md-filled-button
+            style="
+            margin-top: 16px;
+            "
+            id="continue_btn">Continue
+    </md-filled-button>
+</div>
+
+<script src="common.js"></script>
+
+<script>
+    const ipTextField = document.getElementById('text-field-ip');
+    const continueButton = document.getElementById("continue_btn");
+
+    ipTextField.value = getServerIp();
+
+    continueButton.addEventListener('click', (ev) => {
+        const typedIp = ipTextField.value
+
+        setServerIp(typedIp);
+    });
+
+</script>
+</body>
+</html>

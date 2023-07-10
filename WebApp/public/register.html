@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IP Camera Register</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="bundle.js"></script>
+
+    <style>
+        #container {
+            display: flex;
+            flex-direction: column;
+            width: 60%;
+            left: 20%;
+            top: 20%;
+            position: absolute;
+        }
+    </style>
+
+</head>
+<body>
+<h1 style="text-align: center; margin-top: 32px;">IP Camera</h1>
+
+<div id="container">
+    <md-outlined-text-field
+            id="username"
+            label="Username"
+    ></md-outlined-text-field>
+
+    <md-outlined-text-field
+            id="password"
+            label="Password"
+            supportingText="Must contain at least 8 characters"
+            type="password"
+            style="margin-top:32px;
+
+          "
+    ></md-outlined-text-field>
+
+    <md-filled-button
+            id="register-button"
+            style="
+            margin-top: 16px;
+            ">Register
+    </md-filled-button>
+</div>
+
+<script src="common.js"></script>
+
+<script>
+
+    const button = document.getElementById('register-button');
+    const usernameField = document.getElementById('username');
+    const passwordField = document.getElementById('password');
+
+    button.addEventListener('click', async () => {
+        const response = await fetch(BACKEND_URL + "/register", {
+            "method": "POST",
+            "headers": {
+                'Content-Type': 'application/json',
+            },
+            "body": JSON.stringify({
+                'username':usernameField.value,
+                'password':passwordField.value
+            })
+        });
+
+        if (response.ok) {
+            window.location.replace("/login.html")
+        } else {
+            alert("Registration failed");
+        }
+    });
+
+</script>
+
+</body>
+</html>

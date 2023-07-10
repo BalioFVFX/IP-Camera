@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gallery</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="bundle.js"></script>
+
+    <style>
+        #container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .image-frame {
+            margin: 16px;
+            width: 800px;
+            height: 600px;
+        }
+    </style>
+
+</head>
+<body>
+<h1 style="text-align: center; margin-top: 32px;">Gallery</h1>
+
+<div id="container"></div>
+
+<script src="common.js"></script>
+
+<script>
+    const container = document.getElementById('container');
+
+    async function loadGallery() {
+        const response = await fetch(BACKEND_URL + "/gallery", {
+            "method": "GET",
+            "headers": {
+                'Content-Type': 'application/json',
+                'Authorization': getAuthorization()
+            }
+        });
+
+        const imagesArray = await response.json();
+
+        imagesArray.forEach(image => {
+            const imgElement = document.createElement('img');
+            imgElement.classList.add('image-frame')
+
+            const base64Str = btoa(String.fromCharCode.apply(null, image));
+
+            imgElement.src = `data:image/jpeg;base64,${base64Str}`;
+            container.appendChild(imgElement);
+        });
+    }
+
+    loadGallery();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "webapp",
+  "dependencies": {
+    "@material/web": "^1.0.0-pre.7",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "cors": "^2.8.5",
+    "rollup": "^3.21.2",
+    "webpack-dev-server": "^4.15.0"
+  },
+  "scripts": {
+    "serve": "webpack serve"
+  },
+  "devDependencies": {
+    "webpack-cli": "^5.1.4"
+  }
+}

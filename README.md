@@ -5,7 +5,7 @@
 ## How to use
 You can either watch this video or follow the steps below.
 ### How to start live streaming
-1. Start the Kotlin server. By default the Kotlin server launches 3 sockets, each acting as a server:
+1. Start the Video server. By default the Video server launches 3 sockets, each acting as a server:
 - WebSocket Server (runs on port 1234).
 - MJPEG Server (runs on port 4444).
 - Camera Server (runs on port 4321).

@@ -2,6 +2,10 @@
 ![Preview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/preview.gif?raw=true)
 
 [Fullscreen](https://youtu.be/NtQ_Al-56Qs)
+
+## Overview
+![Overview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/high_level_overview.png?raw=true)
+
 ## How to use
 You can either watch this video or follow the steps below.
 ### How to start live streaming

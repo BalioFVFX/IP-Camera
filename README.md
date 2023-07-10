@@ -32,6 +32,7 @@ Open the VLC media player, File -> Open Network -> Network and write your MJPEG'
 2. Open your browser and navigate to `http://localhost:8080/`.
 3. Go to settings and enter your WebSocket server ip address. For example `192.168.0.101:1234`.
 4. Go to the streaming page `http://localhost:8080/stream.html` and click the connect button.
+
 ![Preview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/webapp.gif?raw=true)
 
 ### Configuring the Web App's server
@@ -45,5 +46,6 @@ Note: This section is required only if you'd like to be able to take screenshots
 6. Create a user through the Web App from `http://localhost:8080/register.html`
 7. Take screenshots from `http://localhost:8080/stream.html`
 8. View your screenshots at `http://localhost:8080/gallery.html`
+
 ![Preview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/webapp_gallery.gif?raw=true)
 ---

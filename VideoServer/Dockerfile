@@ -29,7 +29,7 @@ FROM eclipse-temurin:22-jdk
 WORKDIR /app
 
 # Copy the shadow JAR file from the build stage
-COPY --from=build /app/build/libs/VideoServer-1.0-SNAPSHOT-all.jar /app/VideoServer.jar
+COPY --from=build /app/build/libs/VideoServer-1.0-SNAPSHOT.jar /app/VideoServer.jar
 
 # Specify the command to run the JAR file
 ENTRYPOINT ["java", "-jar", "/app/VideoServer.jar"]

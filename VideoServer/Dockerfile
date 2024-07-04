@@ -5,10 +5,10 @@ FROM eclipse-temurin:22-jdk AS build
 WORKDIR /app
 
 # Copy the Gradle wrapper files
-COPY gradlew gradlew
-COPY gradlew.bat gradlew.bat
-COPY gradle/wrapper/gradle-wrapper.jar gradle/wrapper/gradle-wrapper.jar
-COPY gradle/wrapper/gradle-wrapper.properties gradle/wrapper/gradle-wrapper.properties
+COPY gradlew /app/gradlew
+COPY gradlew.bat /aap/gradlew.bat
+COPY gradle/wrapper/gradle-wrapper.jar /app/gradle/wrapper/gradle-wrapper.jar
+COPY gradle/wrapper/gradle-wrapper.properties /app/gradle/wrapper/gradle-wrapper.properties
 
 # Copy the build files
 COPY build.gradle settings.gradle /app/
@@ -29,7 +29,7 @@ FROM eclipse-temurin:22-jdk
 WORKDIR /app
 
 # Copy the JAR file from the build stage
-COPY --from=build /app/build/libs/your-app.jar /app/your-app.jar
+COPY --from=build /app/build/libs/VideoServer-1.0-SNAPSHOT.jar /app/VideoServer-1.0-SNAPSHOT.jar
 
 # Specify the command to run the JAR file
-ENTRYPOINT ["java", "-jar", "/app/your-app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/VideoServer-1.0-SNAPSHOT.jar"]

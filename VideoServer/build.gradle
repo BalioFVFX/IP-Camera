@@ -22,15 +22,12 @@ java {
     }
 }
 
-kotlin {
-    jvmToolchain {
-        (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(22))
-    }
-}
-
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     kotlinOptions {
         jvmTarget = '22'
+    }
+    kotlinJavaToolchain {
+        languageVersion.set(JavaLanguageVersion.of(22))
     }
 }
 

@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM eclipse-temurin:22.0.1_10-jdk AS build
+FROM eclipse-temurin:22-jdk AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -23,7 +23,7 @@ RUN chmod +x gradlew
 RUN ./gradlew clean build
 
 # Stage 2: Run the application
-FROM eclipse-temurin:22.0.1_10-jdk
+FROM eclipse-temurin:22-jdk
 
 # Set the working directory inside the container
 WORKDIR /app

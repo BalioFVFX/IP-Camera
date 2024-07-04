@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:tint="@color/material_dynamic_tertiary30" />
+        app:tint="@color/black" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_explain"

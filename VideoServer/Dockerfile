@@ -1,29 +1,35 @@
-# Step 1: Use the specific version of Eclipse Temurin OpenJDK 22.0.1 as the base image
-FROM eclipse-temurin:22.0.1_10-jdk
+# Stage 1: Build the application
+FROM eclipse-temurin:22.0.1_10-jdk AS build
 
-FROM openjdk:11-jdk
-
-# Step 2: Set the working directory inside the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the local Gradle configuration files to the container
-COPY gradlew /app/
-COPY gradlew.bat /app/
-COPY gradle /app/gradle
-COPY build.gradle /app/
-COPY settings.gradle /app/
+# Copy the Gradle wrapper files
+COPY gradlew gradlew
+COPY gradlew.bat gradlew.bat
+COPY gradle/wrapper/gradle-wrapper.jar gradle/wrapper/gradle-wrapper.jar
+COPY gradle/wrapper/gradle-wrapper.properties gradle/wrapper/gradle-wrapper.properties
 
-# Copy the project source
+# Copy the build files
+COPY build.gradle settings.gradle /app/
+
+# Copy the source code
 COPY src /app/src
 
-# Make sure the Gradle wrapper is executable
-RUN chmod +x ./gradlew
+# Give execute permission to gradlew
+RUN chmod +x gradlew
 
-# Step 3: Build the application using the Gradle wrapper
-RUN ./gradlew build
+# Run Gradle build to create the JAR file
+RUN ./gradlew clean build
 
-# Step 4: Define the command to run the application.
+# Stage 2: Run the application
+FROM eclipse-temurin:22.0.1_10-jdk
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the JAR file from the build stage
+COPY --from=build /app/build/libs/your-app.jar /app/your-app.jar
+
+# Specify the command to run the JAR file
 ENTRYPOINT ["java", "-jar", "/app/your-app.jar"]
-
-# CMD: Specifies the default command to run when a container starts. If Docker is run with arguments, these arguments will replace the default specified in CMD. Essentially, CMD provides defaults for an executing container. These defaults can include an executable or they can omit the executable, in which case you must specify an ENTRYPOINT.
-# ENTRYPOINT: Specifies a command that will always be executed when the container starts. The ENTRYPOINT defines the container's main application. You can still pass arguments to the ENTRYPOINT, but the main difference is that the ENTRYPOINT command will not be overridden by the command line arguments passed at runtime. Instead, any command line arguments will be passed as additional arguments to the ENTRYPOINT

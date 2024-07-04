@@ -1,0 +1,29 @@
+# Step 1: Use the specific version of Eclipse Temurin OpenJDK 22.0.1 as the base image
+FROM eclipse-temurin:22.0.1_10-jdk
+
+FROM openjdk:11-jdk
+
+# Step 2: Set the working directory inside the container
+WORKDIR /app
+
+# Copy the local Gradle configuration files to the container
+COPY gradlew /app/
+COPY gradlew.bat /app/
+COPY gradle /app/gradle
+COPY build.gradle /app/
+COPY settings.gradle /app/
+
+# Copy the project source
+COPY src /app/src
+
+# Make sure the Gradle wrapper is executable
+RUN chmod +x ./gradlew
+
+# Step 3: Build the application using the Gradle wrapper
+RUN ./gradlew build
+
+# Step 4: Define the command to run the application.
+ENTRYPOINT ["java", "-jar", "/app/your-app.jar"]
+
+# CMD: Specifies the default command to run when a container starts. If Docker is run with arguments, these arguments will replace the default specified in CMD. Essentially, CMD provides defaults for an executing container. These defaults can include an executable or they can omit the executable, in which case you must specify an ENTRYPOINT.
+# ENTRYPOINT: Specifies a command that will always be executed when the container starts. The ENTRYPOINT defines the container's main application. You can still pass arguments to the ENTRYPOINT, but the main difference is that the ENTRYPOINT command will not be overridden by the command line arguments passed at runtime. Instead, any command line arguments will be passed as additional arguments to the ENTRYPOINT

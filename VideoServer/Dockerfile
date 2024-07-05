@@ -48,4 +48,4 @@ EXPOSE 4321
 # Building
 # sudo docker build -t videoserver:latest . 
 # Running
-# sudo docker run -d -p 1234:1234 -p 4444:4444 -p 4321:4331 videoserver
+# sudo docker run -d -p 1234:1234 -p 4444:4444 -p 4321:4321 videoserver

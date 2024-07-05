@@ -9,6 +9,7 @@ COPY gradlew /app/gradlew
 COPY gradlew.bat /app/gradlew.bat
 COPY gradle/wrapper/gradle-wrapper.jar /app/gradle/wrapper/gradle-wrapper.jar
 COPY gradle/wrapper/gradle-wrapper.properties /app/gradle/wrapper/gradle-wrapper.properties
+COPY device_offline.jpeg /app/device_offline.jpeg
 
 # Copy the build files
 COPY build.gradle settings.gradle /app/

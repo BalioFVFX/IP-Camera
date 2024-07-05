@@ -9,7 +9,6 @@ COPY gradlew /app/gradlew
 COPY gradlew.bat /app/gradlew.bat
 COPY gradle/wrapper/gradle-wrapper.jar /app/gradle/wrapper/gradle-wrapper.jar
 COPY gradle/wrapper/gradle-wrapper.properties /app/gradle/wrapper/gradle-wrapper.properties
-COPY device_offline.jpg /app/device_offline.jpg
 
 # Copy the build files
 COPY build.gradle settings.gradle /app/
@@ -31,6 +30,9 @@ WORKDIR /app
 
 # Copy the shadow JAR file from the build stage
 COPY --from=build /app/build/libs/VideoServer-1.0-SNAPSHOT.jar /app/VideoServer.jar
+
+# Copy the image asset to the container working directory
+COPY device_offline.jpg /app/device_offline.jpg
 
 # Specify the command to run the JAR file
 ENTRYPOINT ["java", "-jar", "/app/VideoServer.jar"]

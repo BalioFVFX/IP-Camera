@@ -1,3 +1,5 @@
+package com.videoserver
+
 fun main(args: Array<String>) {
 
     val cameraServer = CameraServer()

@@ -21,8 +21,19 @@ class CameraPermissionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        EdgeToEdge.setDecorFitsSystemWindows(
+            window = window,
+            fitSystemWindows = false,
+        )
+
         val binding = CameraPermissionActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        EdgeToEdge.setInsetsHandler(
+            root = binding.root,
+            handler = DefaultInsetsHandler(),
+        )
 
         binding.buttonContinue.setOnClickListener {
             requestPermissions(

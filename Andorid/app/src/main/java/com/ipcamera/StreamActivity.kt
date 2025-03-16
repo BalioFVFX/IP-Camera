@@ -12,6 +12,8 @@ import android.util.Range
 import android.view.SurfaceHolder
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updateLayoutParams
 import com.ipcamera.databinding.StreamActivityBinding
 import java.io.DataOutputStream
 import java.net.Socket
@@ -37,9 +39,30 @@ class StreamActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        EdgeToEdge.setDecorFitsSystemWindows(
+            window = window,
+            fitSystemWindows = false,
+        )
+
+        EdgeToEdge.enableImmersiveMode(window = window)
+
         binding = StreamActivityBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
+        EdgeToEdge.setInsetsHandler(
+            root = binding.root,
+            handler = StreamActivityInsetsHandler { systemBarInsets ->
+
+                binding.btnSave.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    bottomMargin += systemBarInsets.bottom
+                }
+
+                binding.tvStatus.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    topMargin += systemBarInsets.top
+                }
+            }
+        )
 
         val cameraManager = getSystemService(CameraManager::class.java)
 

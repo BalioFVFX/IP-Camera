@@ -1,12 +1,18 @@
 package com.ipcamera
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.ipcamera.databinding.MainActivityBinding
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        EdgeToEdge.setDecorFitsSystemWindows(
+            window = window,
+            fitSystemWindows = false,
+        )
+
         val binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

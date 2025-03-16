@@ -30,6 +30,11 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        EdgeToEdge.setInsetsHandler(
+            root = binding.root,
+            handler = DefaultInsetsHandler(),
+        )
+
         val prefs = SettingsPreferences(requireContext().applicationContext)
 
         binding.buttonStream.setOnClickListener {

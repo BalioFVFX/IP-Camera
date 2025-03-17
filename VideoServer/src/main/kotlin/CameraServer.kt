@@ -15,9 +15,7 @@ class CameraServer {
 
     private val deviceOfflineImage: ByteArray = File("device_offline.jpg").readBytes()
 
-    private val server = ServerSocket(4321).apply {
-        receiveBufferSize = 900000000
-    }
+    private val server = ServerSocket(4321)
     
     private val queue = ConcurrentLinkedQueue<ByteArray>()
 
@@ -59,43 +57,15 @@ class CameraServer {
 
             val reader = DataInputStream(client.getInputStream())
 
-            var current: Int
             var start = 0L
             var length = 0
-            val builder = StringBuilder(10)
-            var dataSize = 0
 
             while (true) {
                 try {
                     start = System.currentTimeMillis()
-                    length = reader.read()
+                    length = reader.readInt()
 
-                    if (length == -1) {
-                        throw IOException("Device offline")
-                    }
-
-                    for (i in 0 until length) {
-                        val read = reader.read()
-
-                        if (read == -1) {
-                            throw IOException("Device offline")
-                        }
-
-                        builder.append(read)
-                    }
-
-                    dataSize = builder.toString().toInt()
-                    builder.clear()
-
-                    val byteArray = ByteArray(dataSize)
-
-                    var i = 0
-
-                    while (i < dataSize) {
-                        byteArray[i++] = reader.read().toByte()
-                    }
-
-                    queue.add(byteArray)
+                    queue.add(reader.readNBytes(length))
 
                     println("Elapsed: ${System.currentTimeMillis() - start}")
 

@@ -104,8 +104,6 @@ class StreamActivity : AppCompatActivity() {
                         val port = ipAddress.split(":")[1]
 
                         socket = Socket(ip, port.toInt())
-                        socket?.sendBufferSize = 900000000
-                        socket?.receiveBufferSize = 900000000
 
                         mainHandler.post {
                             binding.tvStatus.text = "Streaming to: $ipAddress"
@@ -129,19 +127,8 @@ class StreamActivity : AppCompatActivity() {
 
                             Log.d(TAG, "Buffer size: ${queue.size}")
                             start = System.currentTimeMillis()
-                            size = frame.size
 
-                            while (size > 0) {
-                                stack.addLast(size % 10)
-                                size /= 10
-                            }
-
-                            socketWriter.writeByte(stack.size)
-
-                            while (stack.isNotEmpty()) {
-                                socketWriter.writeByte(stack.removeLast())
-                            }
-
+                            socketWriter.writeInt(frame.size)
                             socketWriter.write(frame)
 
                             socketWriter.flush()
@@ -187,17 +174,17 @@ class StreamActivity : AppCompatActivity() {
                         }
 
                         val buffer = image.planes[0].buffer
-                        buffer.rewind()
 
-                        val arr = ByteArray(buffer.capacity())
+                        if (buffer.hasArray()) {
+                            queue.add(buffer.array())
+                        } else {
+                            val array = ByteArray(buffer.remaining())
+                            buffer.get(array)
 
-                        var i = 0
-                        while (buffer.hasRemaining()) {
-                            arr[i++] = buffer.get()
+                            queue.add(array)
                         }
 
                         image.close()
-                        queue.add(arr)
                     }
                 }, null)
 
@@ -218,10 +205,9 @@ class StreamActivity : AppCompatActivity() {
                             override fun onCaptureProgressed(
                                 session: CameraCaptureSession,
                                 request: CaptureRequest,
-                                partialResult: CaptureResult
+                                partialResult: CaptureResult,
                             ) {
                                 super.onCaptureProgressed(session, request, partialResult)
-                                Log.d(TAG, "onCaptureProgressed: ")
                             }
                         }
 

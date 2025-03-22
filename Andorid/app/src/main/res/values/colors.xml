@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="iris">#454ADE</color>
+    <color name="space_cadet">#1B1F3B</color>
+    <color name="federal_blue">#0F1257</color>
+
+    <color name="background">@color/white</color>
+    <color name="text_color">@color/black</color>
+
 </resources>

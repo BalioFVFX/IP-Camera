@@ -1,4 +1,4 @@
-package com.ipcamera.ui.component
+package com.ipcamera.ui.base
 
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily

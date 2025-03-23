@@ -8,6 +8,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
+import com.ipcamera.ui.base.RobotoFontFamily
 
 @Composable
 fun NormalText(

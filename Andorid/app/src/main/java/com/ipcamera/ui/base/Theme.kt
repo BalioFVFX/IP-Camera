@@ -1,4 +1,4 @@
-package com.ipcamera.ui.component
+package com.ipcamera.ui.base
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme

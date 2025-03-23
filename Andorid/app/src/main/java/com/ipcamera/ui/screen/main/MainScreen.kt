@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ipcamera.R
-import com.ipcamera.ui.component.ComposeAppTheme
+import com.ipcamera.ui.base.ComposeAppTheme
 import com.ipcamera.ui.component.NavigationButton
 
 @Composable

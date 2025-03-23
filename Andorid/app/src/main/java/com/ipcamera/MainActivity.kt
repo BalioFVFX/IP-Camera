@@ -11,7 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ipcamera.ui.BackgroundColor
-import com.ipcamera.ui.component.ComposeAppTheme
+import com.ipcamera.ui.base.ComposeAppTheme
 import com.ipcamera.ui.nav.NavigationRoute
 import com.ipcamera.ui.nav.Navigator
 import com.ipcamera.ui.screen.main.MainScreen

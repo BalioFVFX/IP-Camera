@@ -15,7 +15,9 @@ fun <T> CollectOnce(flow: Flow<T>, collector: (T) -> Unit) {
         key1 = Unit,
     ) {
         lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            flow.collect { collector.invoke(it) }
+            flow.collect {
+                collector.invoke(it)
+            }
         }
     }
 }

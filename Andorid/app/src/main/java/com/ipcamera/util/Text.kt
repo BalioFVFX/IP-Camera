@@ -22,7 +22,7 @@ fun textResource(text: Text) : String {
         is Text.ResourceId -> {
             stringResource(
                 id = text.resourceId,
-                formatArgs = text.formatArgs,
+                formatArgs = text.formatArgs.map { textResource(it) }.toTypedArray(),
             )
         }
         is Text.String -> {

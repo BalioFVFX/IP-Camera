@@ -15,6 +15,7 @@ import com.ipcamera.ui.component.ComposeAppTheme
 import com.ipcamera.ui.nav.NavigationRoute
 import com.ipcamera.ui.nav.Navigator
 import com.ipcamera.ui.screen.main.MainScreen
+import com.ipcamera.ui.screen.settings.SettingScreen
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -47,7 +48,7 @@ class MainActivity : ComponentActivity() {
                             }
 
                             composable<NavigationRoute.Settings> {
-
+                                SettingScreen()
                             }
                         },
                     )

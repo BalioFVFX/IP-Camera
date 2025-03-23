@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">IP Camera</string>
+    <string name="streaming">Стрийминг</string>
+    <string name="settings">Натройки</string>
+    <string name="camera_settings">Натройки на камерата</string>
+    <string name="resolution">Разделитена способност</string>
+    <string name="frames_per_second">Кадри в секунда</string>
+    <string name="video_quality">Видео качество</string>
+    <string name="server_settings">Настройки на сървъра</string>
+    <string name="ip_address">IP адрес</string>
+    <string name="video_server">Видео сървър</string>
+    <string name="phone_as_video_server">Използвай това устройство като видео сървър</string>
+    <string name="external_device_as_video_server">Изпращай видео данните към външен видео сървър</string>
+    <string name="fps">%1$s fps</string>
+    <string name="video_quality_low">Ниско (%1$s)</string>
+    <string name="video_quality_medium">Средно (%1$s)</string>
+    <string name="video_quality_high">Високо (%1$s)</string>
+</resources>

@@ -9,7 +9,6 @@ private val LightColorScheme = lightColorScheme(
     surface = Color.Red,
     background = Color.Red,
     onBackground = Color.Red,
-
 )
 
 @Composable

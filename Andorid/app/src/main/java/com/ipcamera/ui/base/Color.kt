@@ -1,4 +1,4 @@
-package com.ipcamera.ui
+package com.ipcamera.ui.base
 
 import androidx.compose.ui.graphics.Color
 
@@ -10,3 +10,5 @@ val ContentTextColor = Color(0XFF000000)
 
 val ActionColor = Color(0XFF212529)
 val ActionTextColor = Color(0XFFFFFFFF)
+
+val TextColor = Color(0XFF000000)

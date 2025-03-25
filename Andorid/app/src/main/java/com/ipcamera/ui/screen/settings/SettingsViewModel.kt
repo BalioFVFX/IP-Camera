@@ -3,14 +3,11 @@ package com.ipcamera.ui.screen.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ipcamera.R
+import com.ipcamera.ui.nav.NavigationRoute
 import com.ipcamera.ui.nav.Navigator
 import com.ipcamera.util.Text
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -39,7 +36,9 @@ class SettingsViewModel @Inject constructor(
                 title = Text.ResourceId(R.string.frames_per_second),
                 description = Text.ResourceId(R.string.fps, Text.String("30")),
                 onClick = {
-                    println()
+                    viewModelScope.launch {
+                        navigator.navigate(NavigationRoute.FramesPerSecond)
+                    }
                 }
             ),
             SettingUiItem.Setting(

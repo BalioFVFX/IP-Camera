@@ -21,8 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ipcamera.R
 import com.ipcamera.clickableWithSound
-import com.ipcamera.ui.ContentBorderColor
-import com.ipcamera.ui.ContentColor
+import com.ipcamera.ui.base.ContentBorderColor
+import com.ipcamera.ui.base.ContentColor
 
 @Composable
 fun NavigationButtonContainer(

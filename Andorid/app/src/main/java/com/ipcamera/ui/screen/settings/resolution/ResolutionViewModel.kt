@@ -1,14 +1,18 @@
 package com.ipcamera.ui.screen.settings.resolution
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.ipcamera.ui.nav.Navigator
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ResolutionViewModel @Inject constructor(
-
+    private val navigator: Navigator,
 ) : ViewModel() {
 
     private val resolutions = mutableListOf<Resolution>(
@@ -45,13 +49,18 @@ class ResolutionViewModel @Inject constructor(
             return
         }
 
-        val oldSelectedIndex = resolutions.indexOfFirst { it.selected }
+        viewModelScope.launch {
+            val oldSelectedIndex = resolutions.indexOfFirst { it.selected }
 
-        resolutions[oldSelectedIndex] = resolutions[oldSelectedIndex].copy(selected = false)
-        resolutions[selectedResolution.index] = selectedResolution.copy(selected = true)
+            resolutions[oldSelectedIndex] = resolutions[oldSelectedIndex].copy(selected = false)
+            resolutions[selectedResolution.index] = selectedResolution.copy(selected = true)
 
-        _uiState.value = _uiState.value.copy(
-            resolutions = resolutions.toList()
-        )
+            _uiState.value = _uiState.value.copy(
+                resolutions = resolutions.toList()
+            )
+
+            delay(100) // Await UI refresh feedback
+            navigator.dismiss()
+        }
     }
 }

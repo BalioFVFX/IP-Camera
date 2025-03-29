@@ -10,10 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.navigation.ModalBottomSheetLayout
 import androidx.compose.material.navigation.bottomSheet
 import androidx.compose.material.navigation.rememberBottomSheetNavigator
-import androidx.compose.material3.BottomSheetDefaults
-import androidx.compose.material3.SheetValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
@@ -21,6 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import com.ipcamera.ui.base.BackgroundColor
 import com.ipcamera.ui.base.BottomSheetCornerRadius
 import com.ipcamera.ui.base.ComposeAppTheme
+import com.ipcamera.ui.nav.NavigationEvent
 import com.ipcamera.ui.nav.NavigationRoute
 import com.ipcamera.ui.nav.Navigator
 import com.ipcamera.ui.screen.main.MainScreen
@@ -55,7 +53,7 @@ class MainActivity : ComponentActivity() {
                             topEnd = BottomSheetCornerRadius,
                         ),
 
-                    ) {
+                        ) {
                         NavHost(
                             navController = navController,
                             startDestination = NavigationRoute.Main,
@@ -83,8 +81,12 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-                    CollectOnce(navigator.navigationEvent) { route ->
-                        navController.navigate(route)
+                    CollectOnce(navigator.navigationEvent) { event ->
+                        when (event) {
+                            NavigationEvent.Dismiss -> navController.popBackStack()
+                            is NavigationEvent.NavigateToRoute -> navController.navigate(event.route)
+                        }
+
                     }
                 }
             }

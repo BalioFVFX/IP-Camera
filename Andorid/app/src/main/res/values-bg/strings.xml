@@ -16,4 +16,5 @@
     <string name="video_quality_low">Ниско (%1$s)</string>
     <string name="video_quality_medium">Средно (%1$s)</string>
     <string name="video_quality_high">Високо (%1$s)</string>
+    <string name="save">Запази</string>
 </resources>

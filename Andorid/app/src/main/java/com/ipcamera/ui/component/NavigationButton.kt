@@ -21,8 +21,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ipcamera.R
 import com.ipcamera.clickableWithSound
+import com.ipcamera.ui.base.ButtonCornerRadius
 import com.ipcamera.ui.base.ContentBorderColor
 import com.ipcamera.ui.base.ContentColor
+import com.ipcamera.ui.base.ContentCornerRadius
 
 @Composable
 fun NavigationButtonContainer(
@@ -37,11 +39,11 @@ fun NavigationButtonContainer(
             .border(
                 width = 0.1.dp,
                 brush = SolidColor(ContentBorderColor),
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(ButtonCornerRadius)
             )
             .background(
                 color = ContentColor,
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(ButtonCornerRadius)
             )
             .clickableWithSound(
                 interactionSource = interactionSource,

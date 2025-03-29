@@ -1,4 +1,4 @@
-package com.ipcamera.ui.screen.fps
+package com.ipcamera.ui.screen.settings.fps
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode

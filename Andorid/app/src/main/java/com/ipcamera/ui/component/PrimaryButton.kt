@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import com.ipcamera.clickableWithSound
 import com.ipcamera.ui.base.ActionColor
 import com.ipcamera.ui.base.ActionTextColor
+import com.ipcamera.ui.base.ButtonCornerRadius
+import com.ipcamera.ui.base.ContentCornerRadius
 
 @Composable
 fun PrimaryButton(
@@ -29,7 +31,7 @@ fun PrimaryButton(
         modifier = modifier
             .background(
                 color = ActionColor,
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(ButtonCornerRadius)
             )
             .clickableWithSound(
                 interactionSource = interactionSource,

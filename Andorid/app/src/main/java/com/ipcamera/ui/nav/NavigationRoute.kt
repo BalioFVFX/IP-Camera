@@ -13,5 +13,8 @@ sealed class NavigationRoute {
     data object Settings: NavigationRoute()
 
     @Serializable
+    data object Resolution: NavigationRoute()
+
+    @Serializable
     data object FramesPerSecond: NavigationRoute()
 }

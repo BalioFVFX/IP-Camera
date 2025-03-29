@@ -1,17 +1,17 @@
-package com.ipcamera.ui.screen.fps
+package com.ipcamera.ui.screen.settings.fps
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderDefaults
-import androidx.compose.material3.SliderState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -20,18 +20,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ipcamera.R
+import com.ipcamera.ui.base.BottomSheetCornerRadius
+import com.ipcamera.ui.base.ContentColor
+import com.ipcamera.ui.component.DiscreteSlider
 import com.ipcamera.ui.component.NormalText
-import java.nio.file.WatchEvent
+import com.ipcamera.ui.component.PrimaryButton
 
 @Composable
-fun FramesPerSecondScreen() {
+fun FramesPerSecondScreen(
+    viewModel: FramesPerSecondViewModel = hiltViewModel<FramesPerSecondViewModel>(),
+) {
+    val uiState by viewModel.uiState.collectAsState()
+
     FramesPerSecondScreenContent(
-        content = FramesPerSecondUi(
-            minimumFps = 1,
-            maximumFps = 120,
-            initialFps = 29,
-        )
+        content = uiState,
+        onSaveAction = { viewModel.onSaveAction(it) },
     )
 }
 
@@ -39,12 +44,20 @@ fun FramesPerSecondScreen() {
 @Composable
 fun FramesPerSecondScreenContent(
     content: FramesPerSecondUi,
+    onSaveAction: (Float) -> Unit,
 ) {
-
-    var currentFps by remember { mutableIntStateOf(content.initialFps) }
+    var currentFps by remember { mutableFloatStateOf(content.initialFps) }
 
     Column(
-        modifier = Modifier.padding(horizontal = 32.dp)
+        modifier = Modifier
+            .background(
+                color = ContentColor,
+                shape = RoundedCornerShape(
+                    topStart = BottomSheetCornerRadius,
+                    topEnd = BottomSheetCornerRadius,
+                )
+            )
+            .padding(horizontal = 32.dp)
     ) {
         NormalText(
             modifier = Modifier
@@ -58,7 +71,7 @@ fun FramesPerSecondScreenContent(
         BallFpsScene(
             modifier = Modifier
                 .fillMaxWidth(),
-            fps = currentFps,
+            fps = currentFps.toInt(),
         )
 
         NormalText(
@@ -69,16 +82,23 @@ fun FramesPerSecondScreenContent(
             fontSize = 12.sp,
         )
 
-        Slider(
+        DiscreteSlider(
             modifier = Modifier,
-            value = currentFps.toFloat(),
-            valueRange = content.minimumFps.toFloat() .. content.maximumFps.toFloat() ,
-            onValueChange = {
-                currentFps = it.toInt()
-            }
+            value = currentFps,
+            supportedValues = content.supportedFps,
+            onValueChanged = {
+                currentFps = it
+            },
         )
 
-        Spacer(modifier = Modifier.size(64.dp))
+        PrimaryButton(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(R.string.save)
+        ) {
+            onSaveAction.invoke(currentFps)
+        }
+
+        Spacer(modifier = Modifier.size(14.dp))
     }
 }
 
@@ -87,9 +107,9 @@ fun FramesPerSecondScreenContent(
 private fun FramesPerSecondScreenPreview() {
     FramesPerSecondScreenContent(
         content = FramesPerSecondUi(
-            minimumFps = 1,
-            maximumFps = 120,
-            initialFps = 29,
-        )
+            supportedFps = listOf(15f, 20f, 24f, 30f),
+            initialFps = 20f,
+        ),
+        onSaveAction = {}
     )
 }

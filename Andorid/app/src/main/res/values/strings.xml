@@ -16,4 +16,5 @@
     <string name="video_quality_low">Low (%1$s)</string>
     <string name="video_quality_medium">Medium (%1$s)</string>
     <string name="video_quality_high">High (%1$s)</string>
+    <string name="save">Save</string>
 </resources>

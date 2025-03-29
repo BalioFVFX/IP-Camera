@@ -6,27 +6,35 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.navigation.ModalBottomSheetLayout
 import androidx.compose.material.navigation.bottomSheet
 import androidx.compose.material.navigation.rememberBottomSheetNavigator
+import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.SheetValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import com.ipcamera.ui.base.BackgroundColor
+import com.ipcamera.ui.base.BottomSheetCornerRadius
 import com.ipcamera.ui.base.ComposeAppTheme
 import com.ipcamera.ui.nav.NavigationRoute
 import com.ipcamera.ui.nav.Navigator
-import com.ipcamera.ui.screen.fps.FramesPerSecondScreen
 import com.ipcamera.ui.screen.main.MainScreen
 import com.ipcamera.ui.screen.settings.SettingScreen
+import com.ipcamera.ui.screen.settings.fps.FramesPerSecondScreen
+import com.ipcamera.ui.screen.settings.resolution.ResolutionScreen
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject lateinit var navigator: Navigator
+    @Inject
+    lateinit var navigator: Navigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +50,11 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController(bottomSheetNavigator)
                     ModalBottomSheetLayout(
                         bottomSheetNavigator = bottomSheetNavigator,
+                        sheetShape = RoundedCornerShape(
+                            topStart = BottomSheetCornerRadius,
+                            topEnd = BottomSheetCornerRadius,
+                        ),
+
                     ) {
                         NavHost(
                             navController = navController,
@@ -57,6 +70,10 @@ class MainActivity : ComponentActivity() {
 
                                 composable<NavigationRoute.Settings> {
                                     SettingScreen()
+                                }
+
+                                dialog<NavigationRoute.Resolution> {
+                                    ResolutionScreen()
                                 }
 
                                 bottomSheet<NavigationRoute.FramesPerSecond> {

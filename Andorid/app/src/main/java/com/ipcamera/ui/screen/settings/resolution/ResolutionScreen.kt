@@ -1,6 +1,7 @@
 package com.ipcamera.ui.screen.settings.resolution
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,9 +15,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.ipcamera.R
 import com.ipcamera.ui.base.ActionColor
 import com.ipcamera.ui.base.ContentColor
 import com.ipcamera.ui.base.ContentCornerRadius
@@ -32,41 +35,53 @@ fun ResolutionScreen(viewModel: ResolutionViewModel = hiltViewModel()) {
 
 @Composable
 fun ResolutionScreenContent(uiState: ResolutionUi) {
-    LazyColumn(
-        modifier = Modifier
-            .background(
-                color = ContentColor,
-                shape = RoundedCornerShape(ContentCornerRadius)
-            )
-            .padding(vertical = 16.dp)
-    ) {
-        items(uiState.resolutions, key = { it.index }) { resolution ->
-            Row(
-                modifier = Modifier
-                    .withDefaultClickSound {
-                        uiState.onResolutionClick.invoke(resolution)
-                    }
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = 16.dp
+    Column {
+        NormalText(
+            modifier = Modifier
+                .padding(
+                    top = 24.dp,
+                )
+                .align(alignment = Alignment.CenterHorizontally),
+            text = stringResource(R.string.resolution)
+        )
+
+        LazyColumn(
+            modifier = Modifier
+                .background(
+                    color = ContentColor,
+                    shape = RoundedCornerShape(ContentCornerRadius)
+                )
+                .padding(vertical = 16.dp)
+                .padding(top = 32.dp)
+        ) {
+            items(uiState.resolutions, key = { it.index }) { resolution ->
+                Row(
+                    modifier = Modifier
+                        .withDefaultClickSound {
+                            uiState.onResolutionClick.invoke(resolution)
+                        }
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 16.dp
+                        )
+                ) {
+                    RadioButton(
+                        selected = resolution.selected,
+                        colors = RadioButtonDefaults.colors(
+                            selectedColor = ActionColor
+                        ),
+                        onClick = {
+                            uiState.onResolutionClick.invoke(resolution)
+                        },
                     )
-            ) {
-                RadioButton(
-                    selected = resolution.selected,
-                    colors = RadioButtonDefaults.colors(
-                        selectedColor = ActionColor
-                    ),
-                    onClick = {
-                        uiState.onResolutionClick.invoke(resolution)
-                    },
-                )
 
-                NormalText(
-                    modifier = Modifier.align(alignment = Alignment.CenterVertically),
-                    text = resolution.value,
-                )
+                    NormalText(
+                        modifier = Modifier.align(alignment = Alignment.CenterVertically),
+                        text = resolution.value,
+                    )
+                }
+
             }
-
         }
     }
 }

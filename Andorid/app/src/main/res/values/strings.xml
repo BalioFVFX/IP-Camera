@@ -17,4 +17,6 @@
     <string name="video_quality_medium">Medium (%1$s)</string>
     <string name="video_quality_high">High (%1$s)</string>
     <string name="save">Save</string>
+    <string name="check_server_connection">Check connection</string>
+    <string name="scan_for_server">Scan</string>
 </resources>

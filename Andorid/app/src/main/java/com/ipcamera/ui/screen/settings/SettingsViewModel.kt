@@ -60,7 +60,9 @@ class SettingsViewModel @Inject constructor(
                     title = Text.ResourceId(R.string.ip_address),
                     description = Text.String("192.168.0.101:4444"),
                     onClick = {
-
+                        viewModelScope.launch {
+                            navigator.navigate(NavigationRoute.ServerIpAddress)
+                        }
                     }
                 ),
                 SettingUiItem.Setting(

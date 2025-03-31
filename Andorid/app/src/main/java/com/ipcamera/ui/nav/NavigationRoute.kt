@@ -17,4 +17,7 @@ sealed class NavigationRoute {
 
     @Serializable
     data object FramesPerSecond: NavigationRoute()
+
+    @Serializable
+    data object ServerIpAddress: NavigationRoute()
 }

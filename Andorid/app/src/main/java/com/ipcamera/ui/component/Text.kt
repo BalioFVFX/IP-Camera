@@ -84,6 +84,26 @@ fun HeaderText(
         fontSize = fontSize,
     )
 }
+
+@Composable
+fun SmallText(
+    modifier: Modifier = Modifier,
+    text: String,
+    color: Color = TextColor,
+    fontSize: TextUnit = 11.sp,
+) {
+    Text(
+        modifier = modifier,
+        text = text,
+        color = color,
+        fontFamily = RobotoFontFamily,
+        fontStyle = FontStyle.Normal,
+        fontWeight = FontWeight.Normal,
+        fontSize = fontSize,
+    )
+}
+
+
 @Preview
 @Composable
 fun NormalTextPreview() {
@@ -106,4 +126,10 @@ fun HelperTextPreview() {
 @Composable
 fun HeaderTextPreview() {
     HeaderText(text = "Header text")
+}
+
+@Preview
+@Composable
+fun SmallTextPreview() {
+    SmallText(text = "Small text")
 }

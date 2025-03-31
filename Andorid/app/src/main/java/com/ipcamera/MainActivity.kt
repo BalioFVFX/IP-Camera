@@ -24,6 +24,7 @@ import com.ipcamera.ui.nav.Navigator
 import com.ipcamera.ui.screen.main.MainScreen
 import com.ipcamera.ui.screen.settings.SettingScreen
 import com.ipcamera.ui.screen.settings.fps.FramesPerSecondScreen
+import com.ipcamera.ui.screen.settings.ip.ServerIpAddressScreen
 import com.ipcamera.ui.screen.settings.resolution.ResolutionScreen
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -72,6 +73,10 @@ class MainActivity : ComponentActivity() {
 
                                 dialog<NavigationRoute.Resolution> {
                                     ResolutionScreen()
+                                }
+
+                                bottomSheet<NavigationRoute.ServerIpAddress> {
+                                    ServerIpAddressScreen()
                                 }
 
                                 bottomSheet<NavigationRoute.FramesPerSecond> {

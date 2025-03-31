@@ -17,4 +17,6 @@
     <string name="video_quality_medium">Средно (%1$s)</string>
     <string name="video_quality_high">Високо (%1$s)</string>
     <string name="save">Запази</string>
+    <string name="check_server_connection">Провери връзката</string>
+    <string name="scan_for_server">Сканирай</string>
 </resources>

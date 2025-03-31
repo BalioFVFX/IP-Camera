@@ -4,20 +4,23 @@ import kotlinx.serialization.Serializable
 
 sealed class NavigationRoute {
     @Serializable
-    data object Main: NavigationRoute()
+    data object Main : NavigationRoute()
 
     @Serializable
-    data object Streaming: NavigationRoute()
+    data object Streaming : NavigationRoute()
 
     @Serializable
-    data object Settings: NavigationRoute()
+    data object Settings : NavigationRoute()
 
     @Serializable
-    data object Resolution: NavigationRoute()
+    data object Resolution : NavigationRoute()
 
     @Serializable
-    data object FramesPerSecond: NavigationRoute()
+    data object FramesPerSecond : NavigationRoute()
 
     @Serializable
-    data object ServerIpAddress: NavigationRoute()
+    data object ServerIpAddress : NavigationRoute()
+
+    @Serializable
+    data object VideoServer : NavigationRoute()
 }

@@ -19,4 +19,6 @@
     <string name="save">Save</string>
     <string name="check_server_connection">Check connection</string>
     <string name="scan_for_server">Scan</string>
+    <string name="phone_as_video_server_description">Use your phone as a video server. (Recommended)</string>
+    <string name="external_device_as_video_server_description">Send raw video data to an external server.</string>
 </resources>

@@ -24,7 +24,6 @@ import com.ipcamera.clickableWithSound
 import com.ipcamera.ui.base.ButtonCornerRadius
 import com.ipcamera.ui.base.ContentBorderColor
 import com.ipcamera.ui.base.ContentColor
-import com.ipcamera.ui.base.ContentCornerRadius
 
 @Composable
 fun NavigationButtonContainer(

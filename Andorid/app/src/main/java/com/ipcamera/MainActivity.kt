@@ -26,6 +26,7 @@ import com.ipcamera.ui.screen.settings.SettingScreen
 import com.ipcamera.ui.screen.settings.fps.FramesPerSecondScreen
 import com.ipcamera.ui.screen.settings.ip.ServerIpAddressScreen
 import com.ipcamera.ui.screen.settings.resolution.ResolutionScreen
+import com.ipcamera.ui.screen.settings.server.VideoServerScreen
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -81,6 +82,10 @@ class MainActivity : ComponentActivity() {
 
                                 bottomSheet<NavigationRoute.FramesPerSecond> {
                                     FramesPerSecondScreen()
+                                }
+
+                                dialog<NavigationRoute.VideoServer> {
+                                    VideoServerScreen()
                                 }
                             },
                         )

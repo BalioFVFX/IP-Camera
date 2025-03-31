@@ -1,10 +1,12 @@
-package com.ipcamera.ui.screen.settings.resolution
+package com.ipcamera.ui.screen.settings.server
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,43 +25,55 @@ import com.ipcamera.R
 import com.ipcamera.ui.base.ActionColor
 import com.ipcamera.ui.base.ContentColor
 import com.ipcamera.ui.base.ContentCornerRadius
+import com.ipcamera.ui.component.HelperText
 import com.ipcamera.ui.component.NormalText
 import com.ipcamera.ui.withDefaultClickSound
+import com.ipcamera.util.Text
+import com.ipcamera.util.textResource
 
 @Composable
-fun ResolutionScreen(viewModel: ResolutionViewModel = hiltViewModel()) {
+fun VideoServerScreen(
+    viewModel: VideoServerViewModel = hiltViewModel<VideoServerViewModel>(),
+) {
     val uiState by viewModel.uiState.collectAsState()
 
-    ResolutionScreenContent(uiState = uiState)
+    VideoServerContent(
+        uiState = uiState,
+        onServerOptionClick = viewModel::onServerOptionClick,
+    )
 }
 
 @Composable
-fun ResolutionScreenContent(uiState: ResolutionUi) {
+fun VideoServerContent(
+    uiState: VideoServerUi,
+    onServerOptionClick: (ServerOption) -> Unit,
+) {
     Column(
         modifier = Modifier
             .background(
                 color = ContentColor,
-                shape = RoundedCornerShape(ContentCornerRadius)
+                shape = RoundedCornerShape(ContentCornerRadius),
             )
     ) {
         NormalText(
             modifier = Modifier
-                .padding(
-                    top = 24.dp,
-                )
+                .padding(top = 24.dp)
                 .align(alignment = Alignment.CenterHorizontally),
-            text = stringResource(R.string.resolution)
+            text = stringResource(R.string.video_server)
         )
 
         LazyColumn(
             modifier = Modifier
                 .padding(top = 32.dp, bottom = 16.dp)
         ) {
-            items(items = uiState.resolutions, key = { it.index }) { resolution ->
+            items(items = uiState.options, key = { it.index }) { serverOption ->
+                if (serverOption.index != 0) {
+                    Spacer(modifier = Modifier.size(16.dp))
+                }
                 Row(
                     modifier = Modifier
                         .withDefaultClickSound {
-                            uiState.onResolutionClick.invoke(resolution)
+                            onServerOptionClick.invoke(serverOption)
                         }
                         .fillMaxWidth()
                         .padding(
@@ -67,21 +81,22 @@ fun ResolutionScreenContent(uiState: ResolutionUi) {
                         )
                 ) {
                     RadioButton(
-                        selected = resolution.selected,
+                        selected = serverOption.selected,
                         colors = RadioButtonDefaults.colors(
                             selectedColor = ActionColor
                         ),
                         onClick = {
-                            uiState.onResolutionClick.invoke(resolution)
+                            onServerOptionClick.invoke(serverOption)
                         },
                     )
 
-                    NormalText(
-                        modifier = Modifier.align(alignment = Alignment.CenterVertically),
-                        text = resolution.value,
-                    )
+                    Column(
+                        modifier = Modifier.align(alignment = Alignment.CenterVertically)
+                    ) {
+                        NormalText(text = textResource(serverOption.title))
+                        HelperText(text = textResource(serverOption.description))
+                    }
                 }
-
             }
         }
     }
@@ -89,27 +104,24 @@ fun ResolutionScreenContent(uiState: ResolutionUi) {
 
 @Preview
 @Composable
-fun ResolutionScreenPreview() {
-    ResolutionScreenContent(
-        uiState = ResolutionUi(
-            resolutions = listOf(
-                Resolution(
-                    value = "1280x720",
-                    selected = false,
+private fun VideoServerScreenPreview() {
+    VideoServerContent(
+        uiState = VideoServerUi(
+            listOf(
+                ServerOption(
+                    title = Text.ResourceId(R.string.phone_as_video_server),
+                    description = Text.ResourceId(R.string.phone_as_video_server_description),
                     index = 0,
-                ),
-                Resolution(
-                    value = "1920x1080",
                     selected = true,
-                    index = 1,
                 ),
-                Resolution(
-                    value = "3840x2160",
+                ServerOption(
+                    title = Text.ResourceId(R.string.external_device_as_video_server),
+                    description = Text.ResourceId(R.string.external_device_as_video_server_description),
+                    index = 1,
                     selected = false,
-                    index = 2,
                 )
-            ),
-            onResolutionClick = {}
-        )
+            )
+        ),
+        onServerOptionClick = {},
     )
 }

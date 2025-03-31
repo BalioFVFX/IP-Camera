@@ -69,7 +69,9 @@ class SettingsViewModel @Inject constructor(
                     title = Text.ResourceId(R.string.video_server),
                     description = Text.ResourceId(R.string.phone_as_video_server),
                     onClick = {
-
+                        viewModelScope.launch {
+                            navigator.navigate(NavigationRoute.VideoServer)
+                        }
                     }
                 ),
             )

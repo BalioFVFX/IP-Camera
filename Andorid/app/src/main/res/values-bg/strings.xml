@@ -19,4 +19,6 @@
     <string name="save">Запази</string>
     <string name="check_server_connection">Провери връзката</string>
     <string name="scan_for_server">Сканирай</string>
+    <string name="phone_as_video_server_description">Използвай телефона си като видео сървър. (Препоръчително)</string>
+    <string name="external_device_as_video_server_description">Изпращай сурови видео данни към външен сървър.</string>
 </resources>

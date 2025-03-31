@@ -91,7 +91,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-                    CollectOnce(navigator.navigationEvent) { event ->
+                    CollectAsEvent(navigator.navigationEvent) { event ->
                         when (event) {
                             NavigationEvent.Dismiss -> navController.popBackStack()
                             is NavigationEvent.NavigateToRoute -> navController.navigate(event.route)

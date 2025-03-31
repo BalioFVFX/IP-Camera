@@ -8,7 +8,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.flow.Flow
 
 @Composable
-fun <T> CollectOnce(flow: Flow<T>, collector: (T) -> Unit) {
+fun <T> CollectAsEvent(flow: Flow<T>, collector: (T) -> Unit) {
     val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(

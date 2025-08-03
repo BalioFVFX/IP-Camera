@@ -19,6 +19,6 @@ class SettingsPreferences(context: Context) {
     }
 
     fun getIpAddress() : String? {
-        return sharedPreferences.getString(IP_KEY, "192.168.0.101:4321")
+        return sharedPreferences.getString(IP_KEY, "192.168.178.101:4321")
     }
 }

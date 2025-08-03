@@ -1,3 +1,9 @@
+package com.videoserver
+
+import com.videoserver.CameraServer
+import com.videoserver.ViewerWebSocketServer
+import com.videoserver.MJpegServer
+
 fun main(args: Array<String>) {
 
     val cameraServer = CameraServer()

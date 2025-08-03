@@ -1,55 +1,67 @@
 # IP Camera
-![Preview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/preview.gif?raw=true)
 
-[Fullscreen](https://youtu.be/NtQ_Al-56Qs)
+[![Preview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/preview.gif?raw=true)](https://youtu.be/NtQ_Al-56Qs)
 
 ## Overview
+
 ![Overview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/high_level_overview.png?raw=true)
 
-## How to use
-You can either watch this video or follow the steps below.
-### How to start live streaming
-1. Start the Video server. By default the Video server launches 3 sockets, each acting as a server:
-- WebSocket Server (runs on port 1234).
-- MJPEG Server (runs on port 4444).
-- Camera Server (runs on port 4321).
+## How to Use
 
+You can either watch the video above or follow the steps below.
+
+### How to Start Live Streaming
+
+1. Start the Video Server. By default, the Video Server launches 3 sockets, each acting as a server:
+   - WebSocket Server (runs on port 1234)
+   - MJPEG Server (runs on port 4444)
+   - Camera Server (runs on port 4321)
 2. Install the app on your phone.
-3. Navigate to app's settings screen and setup your Camera's server IP. For example `192.168.0.101:4321`.
-4. Open the stream screen and click the Start streaming button.
-5. Now your phone sends video data to your Camera Server.
+3. Navigate to the app's settings screen and set up your camera server's IP. For example: `192.168.178.101:4321`
+4. Open the stream screen and click the "Start streaming" button.
+5. Your phone is now sending video data to your Camera Server.
+
 ---
-### Watching the stream
-The stream can be watched from either your browser, the Web App or apps like VLC media player.
+
+### Watching the Stream
+
+The stream can be watched from either your browser, the Web App, or apps like VLC Media Player.
 
 ### Browser
-Open your favorite web browser and navigate to your MJPEG server's IP address. For example `http://192.168.0.101:4444`
 
-![Preview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/browser.gif?raw=true)
+Open your favorite web browser and navigate to your MJPEG Server's IP address. For example:  
+`http://192.168.178.101:4444`
 
-### VLC meida player
-Open the VLC media player, File -> Open Network -> Network and write your MJPEG's server IP address. For example `http://192.168.0.101:4444/`
+[![Browser Preview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/browser.gif?raw=true)](https://youtu.be/NtQ_Al-56Qs)
 
-![Preview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/vlc.gif?raw=true)
+### VLC Media Player
+
+Open VLC Media Player. Go to **File → Open Network → Network** and enter your MJPEG Server's IP address. For example:  
+`http://192.168.178.101:4444/`
+
+[![VLC Preview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/vlc.gif?raw=true)](https://youtu.be/NtQ_Al-56Qs)
+
 ### The Web App
-1. Navigate to the Web app root directory and in your terminal execute `webpack serve`.
-2. Open your browser and navigate to `http://localhost:8080/`.
-3. Go to settings and enter your WebSocket server ip address. For example `192.168.0.101:1234`.
-4. Go to the streaming page `http://localhost:8080/stream.html` and click the connect button.
 
-![Preview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/webapp.gif?raw=true)
+1. Navigate to the Web App's root directory and execute `webpack serve` in your terminal.
+2. Open your browser and go to `http://localhost:8080/`.
+3. Go to the settings page and enter your WebSocket Server's IP address. For example: `192.168.178.101:1234`
+4. Navigate to the streaming page at `http://localhost:8080/stream.html` and click the "Connect" button.
 
-### Configuring the Web App's server
-Note: This section is required only if you'd like to be able to take screenshots from the Web App.
+[![Web App Preview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/webapp.gif?raw=true)](https://youtu.be/NtQ_Al-56Qs)
 
-1. Open the Web App Server project
-2. Open index.js and edit the connection object to match your MySQL credentials. 
-3. Create the required tables by executing the SQL query located in `user.sql`
-4. At the root directory execute `node index.js` in your terminal
-5. You may have to update the IP that the Web App connects to. You can edit this IP in Web app's `stream.html` file (`BACKEND_URL` const variable)
-6. Create a user through the Web App from `http://localhost:8080/register.html`
-7. Take screenshots from `http://localhost:8080/stream.html`
-8. View your screenshots at `http://localhost:8080/gallery.html`
+### Configuring the Web App's Server
 
-![Preview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/webapp_gallery.gif?raw=true)
----
+> **Note:** This section is only required if you'd like to take screenshots from the Web App.
+
+1. Open the Web App's server project.
+2. Open `index.js` and edit the connection object to match your MySQL credentials.
+3. Create the required tables by executing the SQL query located in `user.sql`.
+4. From the root directory, run `node index.js` in your terminal.
+5. You may have to update the IP that the Web App connects to. You can edit this IP in the Web App's `stream.html` file (see the `BACKEND_URL` constant).
+6. Create a user through the Web App at `http://localhost:8080/register.html`.
+7. Take screenshots from `http://localhost:8080/stream.html`.
+8. View your screenshots at `http://localhost:8080/gallery.html`.
+
+[![Web App Gallery Preview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/webapp_gallery.gif?raw=true)](https://youtu.be/NtQ_Al-56Qs)
+

@@ -12,8 +12,6 @@ import android.util.Range
 import android.view.SurfaceHolder
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.updateLayoutParams
 import com.ipcamera.databinding.StreamActivityBinding
 import java.io.DataOutputStream
 import java.net.Socket
@@ -39,30 +37,9 @@ class StreamActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        EdgeToEdge.setDecorFitsSystemWindows(
-            window = window,
-            fitSystemWindows = false,
-        )
-
-        EdgeToEdge.enableImmersiveMode(window = window)
-
         binding = StreamActivityBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
-
-        EdgeToEdge.setInsetsHandler(
-            root = binding.root,
-            handler = StreamActivityInsetsHandler { systemBarInsets ->
-
-                binding.btnSave.updateLayoutParams<ConstraintLayout.LayoutParams> {
-                    bottomMargin += systemBarInsets.bottom
-                }
-
-                binding.tvStatus.updateLayoutParams<ConstraintLayout.LayoutParams> {
-                    topMargin += systemBarInsets.top
-                }
-            }
-        )
 
         val cameraManager = getSystemService(CameraManager::class.java)
 
@@ -104,6 +81,8 @@ class StreamActivity : AppCompatActivity() {
                         val port = ipAddress.split(":")[1]
 
                         socket = Socket(ip, port.toInt())
+                        socket?.sendBufferSize = 900000000
+                        socket?.receiveBufferSize = 900000000
 
                         mainHandler.post {
                             binding.tvStatus.text = "Streaming to: $ipAddress"
@@ -127,8 +106,19 @@ class StreamActivity : AppCompatActivity() {
 
                             Log.d(TAG, "Buffer size: ${queue.size}")
                             start = System.currentTimeMillis()
+                            size = frame.size
 
-                            socketWriter.writeInt(frame.size)
+                            while (size > 0) {
+                                stack.addLast(size % 10)
+                                size /= 10
+                            }
+
+                            socketWriter.writeByte(stack.size)
+
+                            while (stack.isNotEmpty()) {
+                                socketWriter.writeByte(stack.removeLast())
+                            }
+
                             socketWriter.write(frame)
 
                             socketWriter.flush()
@@ -174,17 +164,17 @@ class StreamActivity : AppCompatActivity() {
                         }
 
                         val buffer = image.planes[0].buffer
+                        buffer.rewind()
 
-                        if (buffer.hasArray()) {
-                            queue.add(buffer.array())
-                        } else {
-                            val array = ByteArray(buffer.remaining())
-                            buffer.get(array)
+                        val arr = ByteArray(buffer.capacity())
 
-                            queue.add(array)
+                        var i = 0
+                        while (buffer.hasRemaining()) {
+                            arr[i++] = buffer.get()
                         }
 
                         image.close()
+                        queue.add(arr)
                     }
                 }, null)
 
@@ -205,9 +195,10 @@ class StreamActivity : AppCompatActivity() {
                             override fun onCaptureProgressed(
                                 session: CameraCaptureSession,
                                 request: CaptureRequest,
-                                partialResult: CaptureResult,
+                                partialResult: CaptureResult
                             ) {
                                 super.onCaptureProgressed(session, request, partialResult)
+                                Log.d(TAG, "onCaptureProgressed: ")
                             }
                         }
 

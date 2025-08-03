@@ -1,4 +1,4 @@
-const BACKEND_URL = 'http://192.168.0.101:3000';
+const BACKEND_URL = 'http://192.168.178.101:3000';
 
 let username = ''
 let password = ''
@@ -13,7 +13,7 @@ function getServerIp() {
     const storedIp = localStorage.getItem("server_ip");
 
     if (storedIp == null) {
-        return "192.168.0.101:1234";
+        return "192.168.178.101:1234";
     } else {
         return storedIp
     }

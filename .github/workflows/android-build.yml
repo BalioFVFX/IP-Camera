@@ -1,0 +1,67 @@
+name: Build Android APK and Video Server
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '22'
+
+      - name: Cache Android Gradle
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            Android/.gradle
+          key: ${{ runner.os }}-android-gradle-${{ hashFiles('Android/gradlew', 'Android/build.gradle', 'Android/app/build.gradle') }}
+
+      - name: Build APK
+        run: chmod +x gradlew && ./gradlew assembleDebug
+        working-directory: ./Android
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-apk
+          path: Android/app/build/outputs/apk/debug/app-debug.apk
+
+  build-videoserver:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '22'
+
+      - name: Cache VideoServer Gradle
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            VideoServer/.gradle
+          key: ${{ runner.os }}-videoserver-gradle-${{ hashFiles('VideoServer/gradlew', 'VideoServer/build.gradle') }}
+
+      - name: Build VideoServer Shadow JAR
+        run: chmod +x gradlew && ./gradlew shadowJar
+        working-directory: ./VideoServer
+
+      - name: Upload VideoServer shadow JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: video-server-shadow-jar
+          path: VideoServer/build/libs/*-SNAPSHOT.jar 

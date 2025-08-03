@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:helperText="Format: 192.168.101:4321"
+        app:helperText="Example: 192.168.168.x:4321"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
         >
 
@@ -30,7 +30,7 @@
             android:id="@+id/edit_text_ip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Server IP Address"
+            android:hint="Enter server IP address"
             android:inputType="textNoSuggestions"
             />
 

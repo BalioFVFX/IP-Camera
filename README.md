@@ -1,3 +1,9 @@
+# MOD by MoonDragon
+
+Now it compiles and there are no more video stream size problems as I have fixed 720p,
+
+I also attach the compiled apk ("much requested file")
+
 # IP Camera
 ![Preview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/preview.gif?raw=true)
 

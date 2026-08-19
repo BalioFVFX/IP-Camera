@@ -1,5 +1,6 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.7.21'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.31'
+    id 'application'
 }
 
 group = 'org.example'
@@ -11,17 +12,16 @@ repositories {
 
 dependencies {
     implementation 'org.java-websocket:Java-WebSocket:1.5.3'
-    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.31'
 }
 
-test {
-    useJUnitPlatform()
+application {
+    mainClassName = 'MainKt'
 }
 
 compileKotlin {
     kotlinOptions.jvmTarget = '1.8'
 }
-
 compileTestKotlin {
     kotlinOptions.jvmTarget = '1.8'
 }

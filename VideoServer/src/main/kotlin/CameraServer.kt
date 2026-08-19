@@ -65,7 +65,9 @@ class CameraServer {
                     start = System.currentTimeMillis()
                     length = reader.readInt()
 
-                    queue.add(reader.readNBytes(length))
+                    val buffer = ByteArray(length)
+                    reader.readFully(buffer)
+                    queue.add(buffer)
 
                     println("Elapsed: ${System.currentTimeMillis() - start}")
 

@@ -87,7 +87,7 @@ object EdgeToEdge {
         val insetsController = WindowCompat.getInsetsController(
             window,
             window.decorView,
-        )
+        ) ?: return
 
         insetsController.systemBarsBehavior = WindowInsetsControllerCompat
             .BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE

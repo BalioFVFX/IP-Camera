@@ -1,10 +1,14 @@
 # MOD by MoonDragon
 
-Now it compiles and there are no more video stream size problems as I changed the menu, 
+Now it compiles and there are no more video stream size problems as I changed the menu, also changed the server in such a way as to launch multiple instances with different ports
 
 ![Preview](https://github.com/MoonDragon-MD/IP-Camera-MOD/blob/main/img/Screenshot.jpg?raw=true)
 
-I also [attach the compiled apk](https://github.com/MoonDragon-MD/IP-Camera-MOD/releases/download/V.1/IP-Camera-debug.zip) ("much requested file")
+I also [attach the compiled apk](https://github.com/MoonDragon-MD/IP-Camera-MOD/releases/download/V1.2/IP-Camera-MOD-V1.2-Android-APK.zip
+) ("much requested file")
+
+Server compiled [here](https://github.com/MoonDragon-MD/IP-Camera-MOD/releases/download/V1.2/IP-Camera-MOD-V1.2-Server-portable.zip
+)
 
 # IP Camera
 ![Preview](https://github.com/BalioFVFX/IP-Camera/blob/main/media/preview.gif?raw=true)

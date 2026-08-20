@@ -18,7 +18,6 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = SettingsFragmentBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -32,9 +31,9 @@ class SettingsFragment : Fragment() {
 
         val prefs = SettingsPreferences(requireContext().applicationContext)
 
-        prefs.getIpAddress()?.let { ipAddress ->
-            binding.editTextIp.setText(ipAddress)
-        }
+        prefs.getIpAddress()?.let { binding.editTextIp.setText(it) }
+        binding.editTextWidth.setText(prefs.getStreamWidth().toString())
+        binding.editTextHeight.setText(prefs.getStreamHeight().toString())
 
         binding.editTextIp.addTextChangedListener {
             if (binding.textInputIp.error != null) {
@@ -44,7 +43,6 @@ class SettingsFragment : Fragment() {
 
         binding.btnSave.setOnClickListener {
             val input = binding.editTextIp.text?.toString() ?: ""
-
             val portSeparatorCount = input.count { it == ':' }
 
             if (portSeparatorCount != 1 || input.length <= 10) {
@@ -52,7 +50,11 @@ class SettingsFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            val width = binding.editTextWidth.text?.toString()?.toIntOrNull() ?: 1280
+            val height = binding.editTextHeight.text?.toString()?.toIntOrNull() ?: 720
+
             prefs.saveIpAddress(input)
+            prefs.setStreamResolution(width, height)
 
             activity?.onBackPressed()
         }

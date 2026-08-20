@@ -7,7 +7,7 @@ import java.util.NoSuchElementException
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.CopyOnWriteArrayList
 
-class CameraServer {
+class CameraServer(port: Int = 4321) {
 
     interface OnFrameAvailable {
         fun onAvailable(frame: ByteArray)
@@ -15,7 +15,7 @@ class CameraServer {
 
     private val deviceOfflineImage: ByteArray = File("device_offline.jpg").readBytes()
 
-    private val server = ServerSocket(4321)
+    private val server = ServerSocket(port)
     
     private val queue = ConcurrentLinkedQueue<ByteArray>()
 
@@ -31,6 +31,8 @@ class CameraServer {
     private var deviceConnected = false
 
     fun start() {
+    
+        println("Camera server: listening on port ${server.localPort}")    
 
         cancelFrameDelegation = true
 

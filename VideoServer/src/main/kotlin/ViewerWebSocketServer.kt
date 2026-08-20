@@ -5,7 +5,10 @@ import java.lang.Exception
 import java.net.InetSocketAddress
 import java.util.concurrent.ConcurrentHashMap
 
-class ViewerWebSocketServer(val connectionListener: Listener) {
+class ViewerWebSocketServer(
+    private val connectionListener: Listener,
+    private val port: Int = 1234
+) {
 
     interface Listener {
         fun onConnection(listener: CameraServer.OnFrameAvailable)
@@ -14,26 +17,30 @@ class ViewerWebSocketServer(val connectionListener: Listener) {
 
     private val listeners = ConcurrentHashMap<WebSocket, CameraServer.OnFrameAvailable>()
 
-    private val server = object: WebSocketServer(InetSocketAddress(1234)) {
+    private val server = object : WebSocketServer(InetSocketAddress(port)) {
+
         override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
             println("ViewerWebSocketServer: onOpen")
 
-            val listener = object: CameraServer.OnFrameAvailable {
+            val listener = object : CameraServer.OnFrameAvailable {
                 override fun onAvailable(frame: ByteArray) {
                     conn?.send(frame)
                 }
             }
 
             connectionListener.onConnection(listener)
-            listeners[conn!!] = listener
+            if (conn != null) {
+                listeners[conn] = listener
+            }
         }
 
         override fun onClose(conn: WebSocket?, code: Int, reason: String?, remote: Boolean) {
             println("ViewerWebSocketServer: onClose")
-            val listener = listeners[conn!!]
-
-            connectionListener.onDisconnection(listener!!)
-            listeners.remove(conn)
+            if (conn == null) return
+            val listener = listeners.remove(conn)
+            if (listener != null) {
+                connectionListener.onDisconnection(listener)
+            }
         }
 
         override fun onMessage(conn: WebSocket?, message: String?) {
@@ -46,12 +53,11 @@ class ViewerWebSocketServer(val connectionListener: Listener) {
         }
 
         override fun onStart() {
-            println("ViewerWebSocketServer: onStart")
+            println("ViewerWebSocketServer: onStart (port $port)")
         }
     }
 
-    fun start () {
+    fun start() {
         server.start()
     }
-
 }

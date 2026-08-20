@@ -36,8 +36,8 @@ class StreamActivity : AppCompatActivity() {
     private lateinit var binding: StreamActivityBinding
 
     private val TAG = "StreamTag"
-    private val STREAM_WIDTH = 1280
-    private val STREAM_HEIGHT = 720
+    //private val STREAM_WIDTH = 1280
+    //private val STREAM_HEIGHT = 720
 
     private val cameraThread = HandlerThread("camera").also { it.start() }
     private val cameraHandler = Handler(cameraThread.looper)
@@ -77,9 +77,14 @@ class StreamActivity : AppCompatActivity() {
             }
         )
 
+        val streamPrefs = SettingsPreferences(applicationContext)
+        val streamWidth = streamPrefs.getStreamWidth()
+        val streamHeight = streamPrefs.getStreamHeight()
+        Log.d(TAG, "Stream resolution: ${streamWidth}x${streamHeight}")
+
         imageReader = ImageReader.newInstance(
-            STREAM_WIDTH,
-            STREAM_HEIGHT,
+            streamWidth,
+            streamHeight,
             ImageFormat.YUV_420_888,
             4
         )
@@ -99,7 +104,7 @@ class StreamActivity : AppCompatActivity() {
         }, cameraHandler)
 
         val surfaceView = binding.surfaceView
-        surfaceView.holder.setFixedSize(STREAM_WIDTH, STREAM_HEIGHT)
+        surfaceView.holder.setFixedSize(streamWidth, streamHeight)
 
         val ipAddress = SettingsPreferences(applicationContext).getIpAddress()
             ?: "192.168.0.101:4321"

@@ -1,6 +1,8 @@
 # MOD by MoonDragon
 
-Now it compiles and there are no more video stream size problems as I have fixed 720p,
+Now it compiles and there are no more video stream size problems as I changed the menu, 
+
+![Preview](https://github.com/MoonDragon-MD/IP-Camera-MOD/blob/main/img/Screenshot.jpg?raw=true)
 
 I also [attach the compiled apk](https://github.com/MoonDragon-MD/IP-Camera-MOD/releases/download/V.1/IP-Camera-debug.zip) ("much requested file")
 

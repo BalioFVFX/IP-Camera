@@ -1,6 +1,7 @@
 # MOD by MoonDragon
 
-Now it compiles and there are no more video stream size problems as I changed the menu, also changed the server in such a way as to launch multiple instances with different ports
+Now it compiles and there are no more video stream size problems 
+I changed the menu, also changed the server in such a way as to launch multiple instances with different ports
 
 ![Preview](https://github.com/MoonDragon-MD/IP-Camera-MOD/blob/main/img/Screenshot.jpg?raw=true)
 
